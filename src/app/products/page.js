@@ -15,7 +15,7 @@ function ProductList() {
     const [searchStr, setSearchStr] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const { addToCart } = useContext(CartContext);
-    const electronicImg = '/electronicImg.png';
+    const electronicImg = './electronicImg.png';
 
     useEffect(() => {
         console.log("Component mounted");
