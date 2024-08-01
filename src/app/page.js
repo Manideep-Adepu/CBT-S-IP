@@ -32,7 +32,7 @@ export default function Home() {
 
     // Clear interval on component unmount
     return () => clearInterval(slideInterval);
-  }, []);
+  }, [slides.length]);
 
   useEffect(() => {
     if (searchStr.length > 1) {

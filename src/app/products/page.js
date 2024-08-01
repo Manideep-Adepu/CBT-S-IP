@@ -7,6 +7,7 @@ import Loader from '../products/loader';
 import { CartContext } from '../CartContext';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Image from 'next/image';
 
 function ProductList() {
     const [productList, setProductList] = useState([]);
@@ -79,7 +80,7 @@ function ProductList() {
             <div className="flex flex-wrap justify-center">
                 {filteredProductList.map(product => (
                     <div key={product.id} className="max-w-sm rounded overflow-hidden shadow-lg m-4">
-                        <img className="w-full" src={electronicImg} alt={product.name} />
+                        <Image className="w-full" src={electronicImg} alt={product.name} />
                         <div className="px-6 py-4">
                             <div className="font-bold text-xl mb-2">{product.name}</div>
                             <p className="text-gray-700 text-base">

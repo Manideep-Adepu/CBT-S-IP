@@ -3,6 +3,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { CartContext } from '../CartContext';
 import Loader from '../products/loader';
+import Image from 'next/image';
 
 const ShoppingCart = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -59,7 +60,7 @@ const ShoppingCart = () => {
       {cart.map(item => (
         <div key={item.id} className="bg-white shadow-md rounded-lg overflow-hidden mb-4">
           <div className="flex p-4">
-            <img src={item.imageUrl || electronicImg} alt={item.name} className="w-24 h-24 object-cover rounded-md mr-4" />
+            <Image src={item.imageUrl || electronicImg} alt={item.name} className="w-24 h-24 object-cover rounded-md mr-4" />
             <div className="flex-1">
               <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
               <p className="text-gray-600">Quantity: {item.quantity}</p>
