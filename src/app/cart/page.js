@@ -15,7 +15,7 @@ const ShoppingCart = () => {
     city: '',
     pincode: ''
   });
-  const electronicImg = '/images/electronicImg.png';
+  const electronicImg = './images/electronicImg.png';
   
   useEffect(() => {
     // Simulate loading time

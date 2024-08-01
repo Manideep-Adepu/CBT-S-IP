@@ -15,11 +15,11 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const router = useRouter();
   const slides = [
-    '/images/carousel1.jpg', // Replace with your image paths
-    '/images/carousel2.png',
-    '/images/carousel3.jpg'
+    './images/carousel1.jpg', // Replace with your image paths
+    './images/carousel2.png',
+    './images/carousel3.jpg'
   ];
-  const defaultImage = '/images/default.png';
+  const defaultImage = './images/default.png';
 
   useEffect(() => {
     console.log('Component mounted');
