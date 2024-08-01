@@ -6,6 +6,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const Nav = () => {
   const { loggedIn } = useAuth();
+  console.log('Nav rendered. Logged in:', loggedIn);
 
   return (
     <nav className="bg-gray-800 p-4">

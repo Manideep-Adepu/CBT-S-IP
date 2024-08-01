@@ -1,9 +1,10 @@
-/** @type {import('next').NextConfig} */
+// next.config.js
 const nextConfig = {
   output: 'export',
   images: {
-      domains: ['via.placeholder.com'],
+    unoptimized: true, // Disable optimization for static export
   },
+  basePath: '/repo-name', // Adjust this if necessary
 };
 
 export default nextConfig;
