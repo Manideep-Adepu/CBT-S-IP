@@ -4,26 +4,28 @@ import React, { useState, useContext, useEffect } from 'react';
 import { CartContext } from '../CartContext';
 import Loader from '../products/loader';
 import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faMoneyBillWave } from '@fortawesome/free-solid-svg-icons';
 
 const ShoppingCart = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { cart, removeFromCart } = useContext(CartContext);
   const [isLoading, setIsLoading] = useState(true);
+  const electronicImg = './images/electronicImg.png';
   const [address, setAddress] = useState({
     doorNumber: '',
     street: '',
     city: '',
     pincode: ''
   });
-  const electronicImg = './images/electronicImg.png';
-  
+  const [isAddressValid, setIsAddressValid] = useState(true);
+
   useEffect(() => {
-    // Simulate loading time
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
   }, []);
-  
+
   const handleBuyNowClick = () => {
     setIsModalOpen(true);
   };
@@ -40,9 +42,14 @@ const ShoppingCart = () => {
   };
 
   const handleProceed = () => {
-    // Handle the proceed action with the updated address
-    console.log('Updated Address:', address);
-    handleCloseModal();
+    const { doorNumber, street, city, pincode } = address;
+    if (doorNumber && street && city && pincode) {
+      // Handle the proceed action with the updated address
+      console.log('Updated Address:', address);
+      handleCloseModal();
+    } else {
+      setIsAddressValid(false);
+    }
   };
 
   const cartTotal = cart.length > 0
@@ -60,18 +67,20 @@ const ShoppingCart = () => {
       {cart.map(item => (
         <div key={item.id} className="bg-white shadow-md rounded-lg overflow-hidden mb-4">
           <div className="flex p-4">
-            <Image src={electronicImg} alt={item.name} className="w-24 h-24 object-cover rounded-md mr-4" />
+            <Image alt={item.name} src={electronicImg} className="w-24 h-24 object-cover rounded-md mr-4" />
             <div className="flex-1">
               <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
               <p className="text-gray-600">Quantity: {item.quantity}</p>
               <p className="text-gray-600">Product Category: {item.productCategory}</p>
               <p className="text-gray-600">Price: ${item.basePrice.toFixed(2)}</p>
               <p className="text-gray-600">Description: {item.description}</p>
+            </div>
+            <div className="flex items-end">
               <button
                 onClick={() => removeFromCart(item.id)}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300 mt-2"
+                className="border-2 border-red-500 text-red-500 font-bold py-2 px-4 rounded-full hover:bg-red-500 hover:text-white transition-colors duration-300"
               >
-                Remove from Cart
+                <FontAwesomeIcon icon={faTrash} />
               </button>
             </div>
           </div>
@@ -84,9 +93,9 @@ const ShoppingCart = () => {
           </h3>
           <button
             onClick={handleBuyNowClick}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            className="border-2 border-amber-500 text-amber-500 font-bold py-2 px-4 rounded-full hover:bg-amber-500 hover:text-white transition-colors duration-300"
           >
-            Buy Now
+            <FontAwesomeIcon icon={faMoneyBillWave} /> Buy
           </button>
         </div>
       )}
@@ -94,7 +103,7 @@ const ShoppingCart = () => {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6">
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
             <h3 className="text-2xl font-bold mb-4">Review Your Order</h3>
             <div className="mb-4">
               <h4 className="text-xl font-semibold mb-2">Total Cost: ${cartTotal}</h4>
@@ -143,17 +152,20 @@ const ShoppingCart = () => {
                   className="w-full px-3 py-2 border border-gray-300 rounded-md"
                 />
               </div>
+              {!isAddressValid && (
+                <p className="text-red-500 text-sm">Please fill in all fields.</p>
+              )}
             </div>
             <div className="flex justify-end mt-4">
               <button
                 onClick={handleCloseModal}
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 mr-2"
+                className="bg-transparent border-2 border-gray-500 text-gray-500 px-4 py-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 mr-2"
               >
                 Cancel
               </button>
               <button
                 onClick={handleProceed}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="bg-transparent border-2 border-blue-500 text-blue-500 px-4 py-2 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300"
               >
                 Proceed
               </button>

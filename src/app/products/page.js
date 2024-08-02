@@ -2,12 +2,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faSearch, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../products/loader';
 import { CartContext } from '../CartContext';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 function ProductList() {
     const [productList, setProductList] = useState([]);
@@ -16,6 +17,7 @@ function ProductList() {
     const [isLoading, setIsLoading] = useState(true);
     const { addToCart } = useContext(CartContext);
     const electronicImg = './images/electronicImg.png';
+    const router = useRouter();
 
     useEffect(() => {
         console.log("Component mounted");
@@ -55,6 +57,11 @@ function ProductList() {
         toast.success(`${product.name} added to cart!`);
     };
 
+    const moveToCart = () => {
+        router.push('/cart');
+        return null;
+    };
+
     if (isLoading) {
         return <Loader />;
     }
@@ -62,10 +69,10 @@ function ProductList() {
     return (
         <div className="p-4">
             <h1 className="text-2xl font-bold mb-6 text-center">Electronic Gadgets</h1>
-            <div className="flex justify-center mb-4 ">
-                <div className="relative w-3/4 md:w-1/2 ">
+            <div className="flex justify-center mb-4">
+                <div className="relative w-3/4 md:w-1/2">
                     <input
-                        className="shadow appearance-none border rounded-lg w-full py-1 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100" // Added bg-gray-100 for background color
+                        className="shadow appearance-none border rounded-lg w-full py-1 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100"
                         type="text"
                         placeholder="Search product"
                         value={searchStr}
@@ -93,12 +100,18 @@ function ProductList() {
                                 Description: {product.description}
                             </p>
                         </div>
-                        <div className="px-6 pt-4 pb-2 flex justify-end">
+                        <div className="px-6 pt-4 pb-2 flex justify-between items-center">
                             <button
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                className="border-2 border-blue-500 text-blue-500 font-bold p-2 rounded-full hover:bg-blue-500 hover:text-white transition-colors duration-300"
                                 onClick={() => handleAddToCart(product)}
                             >
-                                <FontAwesomeIcon icon={faCartPlus} /> Add to Cart
+                                <FontAwesomeIcon icon={faCartPlus} />Add to Cart
+                            </button>
+                            <button
+                                className="border-2 border-green-500 text-green-500 font-bold py-2 px-4 rounded-full hover:bg-green-500 hover:text-white transition-colors duration-300"
+                                onClick={() => moveToCart()}
+                            >
+                                <FontAwesomeIcon icon={faCartShopping} />
                             </button>
                         </div>
                     </div>
