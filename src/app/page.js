@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from "next/navigation";
 import SuprSendInbox from '@suprsend/react-inbox';
-import 'react-toastify/dist/ReactToastify.css'; // needed for toast notifications, can be ignored if hideToast=true
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -17,11 +17,19 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const router = useRouter();
   const slides = [
-    './images/carousel1.jpg',
-    './images/carousel2.png',
-    './images/carousel3.jpg'
+    '/images/carousel1.jpg', 
+    '/images/carousel2.png',
+    '/images/carousel3.jpg'
   ];
-  const defaultImage = './images/default.png';
+  const defaultImage = '/images/default.png';
+
+  const getUserDetails = () => ({
+    subscriberId: process.env.NEXT_PUBLIC_SUBSCRIBER_ID || 'user123',
+    distinctId: process.env.NEXT_PUBLIC_DISTINCT_ID || 'unique123',
+  });
+
+  const userDetails = getUserDetails();
+  const { subscriberId, distinctId } = userDetails;
 
   useEffect(() => {
     console.log('Component mounted');
@@ -130,13 +138,6 @@ export default function Home() {
           </button>
         </div>
       </div>
-      <div className="mt-8">
-        <SuprSendInbox
-          workspaceKey={process.env.NEXT_PUBLIC_WORKSPACE_KEY}
-          subscriberId={process.env.NEXT_PUBLIC_SUBSCRIBER_ID}
-          distinctId={process.env.NEXT_PUBLIC_DISTINCT_ID}
-        />
-      </div>
 
       <div className="flex flex-wrap justify-center">
         {filteredProducts.map((product, index) => (
@@ -161,6 +162,14 @@ export default function Home() {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="mt-8">
+        <SuprSendInbox
+          workspaceKey={process.env.NEXT_PUBLIC_WORKSPACE_KEY}
+          subscriberId={subscriberId}
+          distinctId={distinctId}
+        />
       </div>
     </div>
   );
