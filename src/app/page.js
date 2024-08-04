@@ -6,6 +6,8 @@ import Loader from '../app/products/loader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from "next/navigation";
+import SuprSendInbox from '@suprsend/react-inbox';
+import 'react-toastify/dist/ReactToastify.css'; // needed for toast notifications, can be ignored if hideToast=true
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -15,7 +17,7 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const router = useRouter();
   const slides = [
-    './images/carousel1.jpg', // Replace with your image paths
+    './images/carousel1.jpg',
     './images/carousel2.png',
     './images/carousel3.jpg'
   ];
@@ -25,12 +27,10 @@ export default function Home() {
     console.log('Component mounted');
     getProducts();
 
-    // Set up the automatic slide transition
     const slideInterval = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-    }, 5000); // Change slide every 3 seconds
+    }, 5000);
 
-    // Clear interval on component unmount
     return () => clearInterval(slideInterval);
   }, [slides.length]);
 
@@ -73,7 +73,8 @@ export default function Home() {
   if (isLoading) {
     return <Loader />;
   }
-  const redirectTo = ()=> {
+
+  const redirectTo = () => {
     router.push('/products');
     return null;
   }
@@ -97,7 +98,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Carousel */}
       <div className="relative mb-8">
         <div className="relative w-full overflow-hidden rounded-lg">
           <div
@@ -130,6 +130,13 @@ export default function Home() {
           </button>
         </div>
       </div>
+      <div className="mt-8">
+        <SuprSendInbox
+          workspaceKey={process.env.NEXT_PUBLIC_WORKSPACE_KEY}
+          subscriberId={process.env.NEXT_PUBLIC_SUBSCRIBER_ID}
+          distinctId={process.env.NEXT_PUBLIC_DISTINCT_ID}
+        />
+      </div>
 
       <div className="flex flex-wrap justify-center">
         {filteredProducts.map((product, index) => (
@@ -148,7 +155,7 @@ export default function Home() {
               </p>
             </div>
             <div className="px-6 pt-4 pb-2 flex justify-end">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={()=> redirectTo()}>
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={redirectTo}>
                 Learn More
               </button>
             </div>
