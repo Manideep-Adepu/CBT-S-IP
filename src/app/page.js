@@ -6,7 +6,6 @@ import Loader from '../app/products/loader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from "next/navigation";
-import SuprSendInbox from '@suprsend/react-inbox';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
@@ -162,14 +161,6 @@ export default function Home() {
             </div>
           </div>
         ))}
-      </div>
-
-      <div className="mt-8">
-        <SuprSendInbox
-          workspaceKey={process.env.NEXT_PUBLIC_WORKSPACE_KEY}
-          subscriberId={subscriberId}
-          distinctId={distinctId}
-        />
       </div>
     </div>
   );
