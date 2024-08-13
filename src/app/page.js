@@ -16,11 +16,11 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const router = useRouter();
   const slides = [
-    '/images/carousel1.jpg', 
-    '/images/carousel2.png',
-    '/images/carousel3.jpg'
+    './images/carousel1.jpg', 
+    './images/carousel2.png',
+    './images/carousel3.jpg'
   ];
-  const defaultImage = '/images/default.png';
+  const defaultImage = './images/default.png';
 
   const getUserDetails = () => ({
     subscriberId: process.env.NEXT_PUBLIC_SUBSCRIBER_ID || 'user123',
